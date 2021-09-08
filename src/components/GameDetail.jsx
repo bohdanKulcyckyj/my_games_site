@@ -1,9 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { Container, Grid, Card, CardMedia, CardContent, Typography } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { AutorenewTwoTone } from '@material-ui/icons';
+import { smallImage } from '../util';
+import { useDispatch } from 'react-redux';
+import { clearDetail } from '../actions/detailAction';
 
 const useStyles = makeStyles({
     outerContainer: {
@@ -36,6 +40,7 @@ const useStyles = makeStyles({
         zIndex: "10",
     },
     card: {
+        overflow: "hidden",
         padding: "5rem 2rem 7rem",
     },
     img: {
@@ -47,29 +52,51 @@ const useStyles = makeStyles({
     }
 })
 
-const GameDetail = () => {
-    const { game, screenshots } = useSelector(state => state.detail);
+const GameDetail = ({ pathId }) => {
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const exitDetailHandler = (e) => {
+        const element = e.target;
+        console.log(element);
+        if(element.classList.contains(classes.outerContainer)) {
+            document.body.style.overflow = "auto";
+            history.push("/");
+        }
+        dispatch(clearDetail());
+    }
+
+    const { game, screenshots, isLoading } = useSelector(state => state.detail);
 
     const classes = useStyles();
 
     return (
-        <div className={classes.outerContainer}> 
-            <Container className={classes.innerContainer} maxWidth="lg">
-                <Card component="article" className={classes.card}>
-                    <CardContent>
-                        <Typography variant="h3">{game.name}</Typography>
-                    </CardContent>
-                    <CardContent className={classes.description}>
-                        <Typography variant="body1" component="p" dangerouslySetInnerHTML={{__html: game.description}} gutterBottom/>
-                    </CardContent>
-                    {screenshots.results.map(screen => (
-                        <div key={screen.id}>
-                            <img className={classes.img} src={screen.image} alt="game screenshot" />
-                        </div>    
-                    ))}
-                </Card>
-            </Container>
-        </div>
+        <>{!isLoading && (
+            <motion.div onClick={exitDetailHandler} className={classes.outerContainer}> 
+                <Container component={motion.div} className={classes.innerContainer} maxWidth="lg">
+                    <motion.div layoutId={pathId}>
+                        <Card component={motion.article} className={classes.card}>
+                            <CardContent component={motion.div}>
+                                <Typography variant="h3">{game.name}</Typography>
+                            </CardContent>
+                            <motion.div>
+                                <motion.img src={game.background_image} alt={game.name + " image"} className={classes.img} />
+                            </motion.div>
+                            <CardContent component={motion.div} className={classes.description}>
+                                <Typography variant="body1" component="p" dangerouslySetInnerHTML={{__html: game.description}} gutterBottom/>
+                            </CardContent>
+                            <motion.div>
+                                {screenshots.results.map(screen => (
+                                    <div key={screen.id}>
+                                        <img className={classes.img} src={smallImage(screen.image, 1280)} alt="game screenshot" />
+                                    </div>    
+                                ))}
+                            </motion.div>
+                        </Card>
+                    </motion.div>
+                </Container>
+            </motion.div>)}   
+        </>
     )
 }
 
