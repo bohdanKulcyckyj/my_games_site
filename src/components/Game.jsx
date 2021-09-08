@@ -1,22 +1,20 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
+import { Card, CardMedia, CardContent, CardActionArea, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { smallImage } from '../util';
-//REDUX
-import { useDispatch } from 'react-redux';
-import { loadDetail } from '../actions/detailAction';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     card: {
         cursor: "pointer",
         overflow: "hidden",
-        height: "20rem",
+        height: "22rem",
+        padding: "0",
         textDecoration: "none",
+        transition: "all 1s ease",
+        backgroundColor: theme.palette.primary.main,
     },
     cardmedia: {
-        height: "15rem",
+        height: "16rem",
     },
     cardImage: {
         width: "100%",
@@ -29,29 +27,23 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        color: theme.palette.textColor.main
     }
-})
+}))
 
-const Game = ({ name, date, id, image }) => {
-    const stringPathId = id.toString();
-    const dispatch = useDispatch();
-    const loadDetailHandler = () => {
-        dispatch(loadDetail(id));
-        document.body.style.overflow = "hidden";
-    }
-
+const Game = ({ name, date, id, image, popoverIdentifier, handleClick }) => {
     const classes = useStyles();
 
     return (
-        <Card component={motion.div} layoutId={stringPathId} className={classes.card} onClick={loadDetailHandler}>
-            <Link style={{textDecoration: "none", color: "initial"}} to={`/game/${id}`}>
+        <Card className={classes.card} aria-describedby={popoverIdentifier} onClick={handleClick}>
+            <CardActionArea style={{textDecoration: "none", color: "initial"}} to={`/game/${id}`}>
                 <CardMedia className={classes.cardmedia} image={smallImage(image, 640)} title={name} />
                 <CardContent className={classes.cardText}>
                     <Typography className={classes.gameName} variant="h6">{name}</Typography>
-                    <Typography className={classes.gameDate} variant="subtitle1">{date}</Typography>
+                    <Typography variant="body1">{date}</Typography>
                 </CardContent>
-            </Link>
+            </CardActionArea>
         </Card>
     )
 }
