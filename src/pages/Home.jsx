@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 //REDUX;
 import { useDispatch, useSelector } from 'react-redux';
 import loadGames from '../actions/gamesAction';
@@ -6,9 +6,10 @@ import loadGames from '../actions/gamesAction';
 import GamesGroup from '../components/GamesGroup';
 import Landing from '../components/Landing';
 import Header from '../components/Header';
+import Filters from '../components/Filters';
 import Footer from '../components/Footer';
 //MATERIAL UI
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
@@ -19,6 +20,7 @@ const useStyles = makeStyles({
 });
 
 const Home = () => {
+  const [activeFilter, setActiveFilter] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,18 +31,32 @@ const Home = () => {
 
   const classes = useStyles();
 
-  
+  const switchFilter = () => {
+    switch(activeFilter) {
+      case 0:
+        return <GamesGroup data={upcoming} />
+      case 1:
+        return <GamesGroup data={newGames} />
+      case 2:
+        return <GamesGroup data={popular} />
+      default:
+        return <GamesGroup data={upcoming} />
+    }
+  }
+
   return(
     <>
       <Header />
       <Landing />
       <Container className={classes.container} maxWidth="lg">
         {searched.length > 0 && (
-          <GamesGroup data={searched} groupName={"Searching Results"} />
+          <>
+            <Typography variant="h1" gutterBottom>Searching results:</Typography>
+            <GamesGroup data={searched} />
+          </>
         )}
-        <GamesGroup data={upcoming} groupName={"Upcoming"} />
-        <GamesGroup data={newGames} groupName={"New"} />
-        <GamesGroup data={popular} groupName={"Popular"} />
+        <Filters setActiveFilter={setActiveFilter} />
+        {switchFilter()}
       </Container>
       <Footer />
     </>

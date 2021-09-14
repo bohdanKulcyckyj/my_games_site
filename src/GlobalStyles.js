@@ -25,6 +25,9 @@ let myTheme = createMuiTheme({
         h2: {
             fontSize: 46,
         },
+        h6: {
+            fontSize: 18,
+        },
         subtitle1: {
             fontSize: 36
         },

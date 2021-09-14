@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import backgroundImage from '../assets/landing-background.png';
-import fetchSearch from "../actions/gamesAction";
+import fetchSearch from "../actions/searchAction";
 import { useDispatch } from "react-redux";
 import { makeStyles, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
@@ -67,7 +67,6 @@ const Landing = () => {
     };
     const submitSearch = (e) => {
       e.preventDefault();
-      console.log(textInput);
       dispatch(fetchSearch(textInput));
       setTextInput("");
     };

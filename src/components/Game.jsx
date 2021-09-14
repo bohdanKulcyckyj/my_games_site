@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
         color: theme.palette.textColor.main
+    },
+    releasedDate: {
+        color: theme.palette.secondary.light
     }
 }))
 
@@ -41,7 +44,7 @@ const Game = ({ name, date, id, image, popoverIdentifier, handleClick }) => {
                 <CardMedia className={classes.cardmedia} image={smallImage(image, 640)} title={name} />
                 <CardContent className={classes.cardText}>
                     <Typography className={classes.gameName} variant="h6">{name}</Typography>
-                    <Typography variant="body1">{date}</Typography>
+                    <Typography className={classes.releasedDate} variant="body1">{date}</Typography>
                 </CardContent>
             </CardActionArea>
         </Card>
