@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
         padding: "5rem 2rem 7rem",
         border: "none",
         boxShadow: "none",
+        [theme.breakpoints.down('sm')]: {
+            padding: "4rem 0.6rem",
+        }
     },
     cardContent: {
         padding: 0,
@@ -37,11 +40,30 @@ const useStyles = makeStyles((theme) => ({
     description: {
         margin: "2rem 0",
     },
+    gameName: {
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 30
+        },
+        [theme.breakpoints.up('md')]: {
+            fontSize: 40
+        },
+    },
     contentContainer: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        margin: "0 0 2rem"
+        margin: "0 0 2rem",
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: "column",
+            padding: 0
+        },
+        [theme.breakpoints.up('md')]: {
+            flexDirection: "column",
+            padding: 0
+        },
+        [theme.breakpoints.up('lg')]: {
+            flexDirection: "row",
+        },
     },
     platforms: {
         display: "flex",
@@ -49,6 +71,11 @@ const useStyles = makeStyles((theme) => ({
         "& img": {
             margin: "10px",
             color: theme.palette.primary.main
+        },
+        [theme.breakpoints.down('sm')]: {
+            "& img": {
+                transform: "scale(0.8)",
+            },
         }
     },
     rating: {
@@ -125,7 +152,7 @@ const GameDetail = () => {
                 <Container className={classes.root} maxWidth="lg">
                     <Card component="article" className={classes.card}>
                         <CardContent className={classes.cardContent}>
-                            <Typography variant="h1" color="primary">{game.name}</Typography>
+                            <Typography className={classes.gameName} variant="h1" color="primary" gutterBottom>{game.name}</Typography>
                             {/*<Typography variant="body1" color="primary">{game.released}</Typography>*/}
                             <Container className={classes.contentContainer}>
                                 <div className={classes.rating} title={`rating: ${game.rating}`}>

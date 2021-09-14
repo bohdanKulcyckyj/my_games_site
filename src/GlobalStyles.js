@@ -21,6 +21,7 @@ let myTheme = createMuiTheme({
         ].join(","),
         h1: {
             fontSize: 50,
+            fontWeight: "bolder"
         },
         h2: {
             fontSize: 46,

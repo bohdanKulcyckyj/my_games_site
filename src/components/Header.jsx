@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
       fontFamily: ['Franklin Gothic Medium', 'Arial Narrow', "Arial", "sans-serif"].join(","),
       color: "#f0f0f0",
-      height: "50px"
+      height: "50px",
+      cursor: "pointer"
     },
   }));
 
@@ -26,7 +27,7 @@ const Header = () => {
 
     return (
         <AppBar position="fixed" className={classes.myAppBar}>
-          <img src={Logo} alt="logo" className={classes.logo} />
+          <img src={Logo} alt="logo" className={classes.logo} onClick={() => window.location.reload()} />
         </AppBar>
     )
 }
