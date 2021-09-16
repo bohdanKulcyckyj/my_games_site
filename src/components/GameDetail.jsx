@@ -36,9 +36,16 @@ const useStyles = makeStyles((theme) => ({
     img: {
         width: "100%",
         objectFit: "cover",
+        [theme.breakpoints.down('sm')]: {
+            minHeight: "18rem"
+        },
+        [theme.breakpoints.up('md')]: {
+            height: "auto"
+        },
     },
     description: {
         margin: "2rem 0",
+        textAlign: "left"
     },
     gameName: {
         [theme.breakpoints.down('sm')]: {
@@ -68,13 +75,15 @@ const useStyles = makeStyles((theme) => ({
     platforms: {
         display: "flex",
         flexDirection: "row",
+        flexWrap: "wrap",
         "& img": {
             margin: "10px",
             color: theme.palette.primary.main
         },
         [theme.breakpoints.down('sm')]: {
             "& img": {
-                transform: "scale(0.8)",
+                transform: "scale(0.6)",
+                margin: "6px"
             },
         }
     },
